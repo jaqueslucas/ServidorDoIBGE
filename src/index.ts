@@ -1,6 +1,6 @@
-const { ufs } = require('./controllers/dados')
+import express from 'express'
+import { findUf }  from './controllers/UfController'
 
-const express = require('express');
 const app = express();
 const porta = process.env.PORT; // Porta padrão ou definida
 
@@ -11,8 +11,9 @@ app.get('/uf/sigla', (req, res) => {
 
 app.get('/uf/sigla/:uf', (req, res) => {
     const params = req.params
+
     // Percorrer o array `ufs` e encontrar o objeto que possui a sigla igual a sigla passada pelo usuário
-    const uf = ufs.find((uf) => {
+    const uf = findUf((uf) => {
         return uf.uf === params.uf.toUpperCase()
     })
 
@@ -31,8 +32,7 @@ app.get('/uf/ibge/:codigo', (req, res) => {
     const params = req.params
 
     // Percorrer o array `ufs` e encontrar o objeto que possui a sigla igual a sigla passada pelo usuário
-    // { ibge: 53, estado: 'Distrito Federal', uf: 'DF', regiao: 'Região Centro-Oeste', qtdmun: 1 }
-    const uf = ufs.find((uf) => {
+    const uf = findUf((uf) => {
         return uf.ibge === parseInt(params.codigo)
     })
 
